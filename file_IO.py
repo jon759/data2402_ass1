@@ -1,3 +1,24 @@
+def load_from_csv(filename: str) -> list[dict]:
+    with open(filename) as file:
+        contents = file.read()
+
+    all_rows = []
+
+    lines = []
+    # split into own lines, filter out blank lines - trailing from split()
+    for line in contents.split("\n"):
+        if line.stip() != '':
+            lines.append(line)
+
+    # check for empty file
+    if len(lines) < 1:
+        raise ValueError('empty file')
+
+    # get fields
+    fields = []
+    for name in lines[0].split(","):
+        fields.append(name.strip())
+
 
 
 def load_from_html(filename: str) -> list[dict]:
