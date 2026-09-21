@@ -7,7 +7,7 @@ def load_from_csv(filename: str) -> list[dict]:
     lines = []
     # split into own lines, filter out blank lines - trailing from split()
     for line in contents.split("\n"):
-        if line.stip() != '':
+        if line.strip() != '':
             lines.append(line)
 
     # check for empty file
@@ -19,6 +19,29 @@ def load_from_csv(filename: str) -> list[dict]:
     for name in lines[0].split(","):
         fields.append(name.strip())
 
+    for line in lines[1:]:
+        values = line.split(',')
+        # check for right amount of values
+        if len(values) != len(fields):
+            raise ValueError(f"'wrong number of values in row: {line}")
+
+        this_row_dict = {}
+        for i in range(len(fields)):
+            this_field = fields[i]
+            this_value = values[i].strip()
+
+            # convert datatype
+            try:
+                this_value = float(this_value)
+            except ValueError:
+                pass
+
+            # add to dict
+            this_row_dict[this_field] = this_value
+
+        all_rows.append(this_row_dict)
+
+    return all_rows
 
 
 def load_from_html(filename: str) -> list[dict]:
