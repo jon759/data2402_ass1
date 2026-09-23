@@ -103,6 +103,6 @@ def load_from_html(filename: str) -> list[dict]:
     
     return all_rows
 
-def save_to_json(parsed_data: list[dict]) -> None:
+def save_to_json(filename: str, parsed_data: list[dict]) -> None:
     pass
 
