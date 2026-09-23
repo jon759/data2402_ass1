@@ -1,3 +1,7 @@
+def load_from_data(filename: str) -> None:
+    pass
+
+
 def load_from_csv(filename: str) -> list[dict]:
     with open(filename) as file:
         contents = file.read()
@@ -99,6 +103,6 @@ def load_from_html(filename: str) -> list[dict]:
     
     return all_rows
 
-
-
+def save_to_json(parsed_data: list[dict]) -> None:
+    pass
 

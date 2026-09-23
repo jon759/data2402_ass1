@@ -39,4 +39,4 @@ def print_stats(data: list[dict]) -> None:
                     biggest_count = count
                     most_common = value
             
-            print(f"most common value for {column}: {most_common}")
+            print(f"{column} :most common value is {most_common}")
