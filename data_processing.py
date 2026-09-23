@@ -11,8 +11,13 @@ def print_stats(data: list[dict]) -> None:
     for column in columns:
         # determine if this is a text or numeric column
         if type(data[0][column]) == float:
-            # process this as a numeric column
-            pass # not in this partial solution :)
+            # process this as a numeric column (avg value of all numbers in a column)
+            total = 0.0
+            for row in data:
+                total +=row[column]
+
+            avg = total / len(data)
+            print(f"{column}: average: {avg:.1f}")
 
         else:  # this is a text column
             
