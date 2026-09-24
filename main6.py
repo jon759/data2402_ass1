@@ -1,15 +1,16 @@
-from file_IO import load_from_html, load_from_csv
+from file_IO import load_from_html, load_from_csv, load_from_data, save_to_json
 from data_processing import print_stats
 
 
 # load data
 filename = './data/student_dataset.txt'
 filename_corr = './data/student_dataset_corrupted.txt'
-table_csv = load_from_csv('./data/census_dataset.txt')
+# table_csv = load_from_csv('./data/census_dataset.txt')
 table = load_from_html(filename)
 
 # print table statistics
-print_stats(table)
-print_stats(table_csv)
+# print_stats(table)
+# print_stats(table_csv)
 
-table = load_from_html(filename_corr)
+# table = load_from_html(filename_corr)
+save_to_json('student_data_json.txt', table)

@@ -1,6 +1,14 @@
-def load_from_data(filename: str) -> None:
-    pass
+def load_from_data(filename: str) -> list[dict]:
+    f = open(filename)
+    contents = f.read()
 
+    if '<table>' in contents.lower():
+        return load_from_html(filename)
+
+    try:
+        return load_from_csv(filename)
+    except ValueError:
+        raise Exception('data must be in CSV or HTML format')
 
 def load_from_csv(filename: str) -> list[dict]:
     with open(filename) as file:
@@ -44,7 +52,7 @@ def load_from_csv(filename: str) -> list[dict]:
             this_row_dict[this_field] = this_value
 
         all_rows.append(this_row_dict)
-
+    # print(all_rows)
     return all_rows
 
 
@@ -100,9 +108,38 @@ def load_from_html(filename: str) -> list[dict]:
                 this_row_dict[this_column] = this_value
             
             all_rows.append(this_row_dict)
-    
+    # print(all_rows)
     return all_rows
 
 def save_to_json(filename: str, parsed_data: list[dict]) -> None:
-    pass
+    with open(filename, 'w') as f:
+        f.write('[\n')
+
+        for i in range(len(parsed_data)):
+            # iterate over each row/dict
+            row = parsed_data[i]
+            # empty list for key-value pairs
+            pair = []
+            for col, val in row.items():
+                    text_key = col.replace('"', '\\"')
+                    text_key = '"' + text_key + '"'
+                
+                    if type(val) == float:
+                        text_value = str(val)
+                    else:
+                        text_value = val.replace('"', '\\"')
+                        text_value = '"' + text_value + '"'
+
+                    pair.append(f'{text_key}: {text_value}')
+            # join and separate by comma
+            row_text = '{' +', '.join(pair) + '}'
+            # write comma after every row except first
+            if i > 0:
+                f.write(',\n')
+
+            f.write(row_text)
+
+        f.write(']')
+        
+
 
