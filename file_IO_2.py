@@ -1,3 +1,16 @@
+def load_data(filename: str)-> list[dict]:
+
+    f = open(filename)
+    contents = f.read()
+
+    if '<table>' in contents.lower():
+        return load_from_html(filename)
+
+    try:
+        return load_from_csv(filename)
+    except ValueError:
+        raise Exception('data must be in CSV or HTML format')
+
 def load_from_html(filename: str) -> list[dict]:
     """
     reads a dataset in HTML format. converts numeric data to float.
@@ -54,5 +67,41 @@ def load_from_html(filename: str) -> list[dict]:
     return all_rows
 
 
+def load_from_csv(filename: str) -> list[dict]:
 
+    with open(filename, 'r') as file:
+        lines = file.read()
 
+    all_rows = []
+    content = []
+
+    for line in lines.split("\n"):
+        if line.strip() != '':
+            content.append(line)
+
+    if len(content) < 1:
+            raise ValueError("File is empty.")
+
+    columns = []
+    for c in content[0].split(','):
+        columns.append(c.strip())
+
+    for line in content[1:]:
+        values = line.split(',')
+
+        if len(values) != len(columns):
+            raise AttributeError(f'wrong number of values in row: {line}')
+
+    row_dict = {}
+
+    for i in range(len(columns)):
+        value = values[i].strip()
+        try:
+            value = float(value)
+        except ValueError:
+            pass
+        row_dict[columns[i]] = value
+
+    all_rows.append(row_dict)
+
+    return all_rows
