@@ -4,21 +4,29 @@ def print_stats(data: list[dict]) -> None:
     Prints each column's name, and its most common value (for text columns)
     or it's average value (for numeric columns)
     """
-    
+
+    if len(data) == 0:
+        raise ValueError("There is no data.")
+
     # assuming that all dictionaries in the list will have same keys
     columns = data[0].keys()
 
     for column in columns:
         # determine if this is a text or numeric column
         if type(data[0][column]) == float:
-            # process this as a numeric column
-            pass # not in this partial solution :)
+            total = 0.0
+            count = 0
+            for row in data:
+                total += row[column]
+                count += 1
+            average = total / count
+            print(f"{column}: average {average:.1f}")
 
         else:  # this is a text column
-            
+
             # build a dict that counts number of times we've seen each value
             # within this column
-            value_counts = dict()
+            value_counts = {}
             for row in data:
                 value_counts[row[column]] = value_counts.get(row[column], 0) + 1
 
@@ -29,5 +37,5 @@ def print_stats(data: list[dict]) -> None:
                 if count > biggest_count:
                     biggest_count = count
                     most_common = value
-            
+
             print(f"most common value for {column}: {most_common}")
