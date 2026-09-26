@@ -4,6 +4,9 @@ def print_stats(data: list[dict]) -> None:
     Prints each column's name, and its most common value (for text columns)
     or it's average value (for numeric columns)
     """
+
+    if len(data) == 0:
+        raise ValueError("no data")
     
     # assuming that all dictionaries in the list will have same keys
     columns = data[0].keys()
