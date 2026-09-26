@@ -35,7 +35,7 @@ def load_from_csv(filename: str) -> list[dict]:
         values = line.split(',')
         # check for right amount of values
         if len(values) != len(fields):
-            raise ValueError(f"'wrong number of values in row: {line}")
+            raise ValueError(f'wrong number of values in row: {line}')
 
         this_row_dict = {}
         for i in range(len(fields)):
@@ -66,6 +66,10 @@ def load_from_html(filename: str) -> list[dict]:
     """    
     with open(filename, 'r') as file:
         contents = file.read()
+
+        if not contents:
+            raise ValueError("empty file")
+        
         all_rows = []
 
         head, body = contents.split('</thead>')
@@ -92,7 +96,7 @@ def load_from_html(filename: str) -> list[dict]:
 
             # check the row has the right number of values in it
             if len(values) != len(columns):
-                raise Exception(f'wrong number of values in row: {row_text}')
+                raise AttributeError(f'wrong number of values in row: {row_text}')
 
             this_row_dict = dict()
             for i in range(len(columns)):
@@ -139,7 +143,7 @@ def save_to_json(filename: str, parsed_data: list[dict]) -> None:
 
             f.write(row_text)
 
-        f.write(']')
+        f.write('\n]')
         
 
 
