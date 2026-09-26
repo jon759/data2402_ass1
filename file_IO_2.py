@@ -105,3 +105,33 @@ def load_from_csv(filename: str) -> list[dict]:
     all_rows.append(row_dict)
 
     return all_rows
+
+def save_to_json(filename: str, parsed_data: list[dict]) -> None:
+    with open(filename, 'w') as f:
+        f.write('[\n')
+
+        for i in range(len(parsed_data)):
+            # iterate over each row/dict
+            row = parsed_data[i]
+            # empty list for key-value pairs
+            pair = []
+            for col, val in row.items():
+                text_key = col.replace('"', '\\"')
+                text_key = '"' + text_key + '"'
+
+                if type(val) == float:
+                    text_value = str(val)
+                else:
+                    text_value = val.replace('"', '\\"')
+                    text_value = '"' + text_value + '"'
+
+                pair.append(f'{text_key}: {text_value}')
+            # join and separate by comma
+            row_text = '{' + ', '.join(pair) + '}'
+            # write comma after every row except first
+            if i > 0:
+                f.write(',\n')
+
+            f.write(row_text)
+
+        f.write('\n]')
