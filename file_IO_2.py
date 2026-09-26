@@ -72,7 +72,7 @@ def load_from_csv(filename: str) -> list[dict]:
     with open(filename, 'r') as file:
         lines = file.read()
 
-    all_rows = []
+    all_lines = []
     content = []
 
     for line in lines.split("\n"):
@@ -102,11 +102,12 @@ def load_from_csv(filename: str) -> list[dict]:
             pass
         row_dict[columns[i]] = value
 
-    all_rows.append(row_dict)
+    all_lines.append(row_dict)
 
-    return all_rows
+    return all_lines
 
 def save_to_json(filename: str, parsed_data: list[dict]) -> None:
+
     with open(filename, 'w') as f:
         f.write('[\n')
 
