@@ -2,10 +2,10 @@ from file_IO_2 import load_from_html, load_from_csv, load_data, save_to_json
 from data_processing_2 import print_stats
 
 
-filename = './data/student_dataset.txt'
-filename_corr = './data/student_dataset_corrupted.txt'
+filename = '.student_dataset.txt'
+filename_corr = 'student_dataset_corrupted.txt'
 table_html = load_data(filename)
-table_csv2 = load_data('./data/census_subset.txt') 
+table_csv2 = load_data('census_subset_json.txt') 
 
 
 # print table statistics
